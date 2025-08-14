@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: todos-ingress
+  namespace: react-test
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod # Remove if not using TLS
+spec:
+  rules:
+    - host: app.ai4devops.online
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: todos-frontend
+                port:
+                  number: 3000
+    - host: api.ai4devops.online
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: todos-backend
+                port:
+                  number: 5000
+  tls:
+    - hosts:
+        - app.ai4devops.online
+        - api.ai4devops.online
+      secretName: todos-tls

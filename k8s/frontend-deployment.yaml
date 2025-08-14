@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: todos-frontend
+  namespace: react-test
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: todos-frontend
+  template:
+    metadata:
+      labels:
+        app: todos-frontend
+    spec:
+      containers:
+        - name: todos-frontend
+          image: pangasathish/todos-frontend:latest
+          ports:
+            - containerPort: 3000
